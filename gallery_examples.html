@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Gallery</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
     <style type="text/css">
-		body {  font-family: Helvetica, Sans-Serif; font-weight: 300;	}
 		.gallery div {	display: inline-block;}
 		.gallery div img {	width: 200px;	padding: 20px;}
 		.gallery h1 { font-size: 20px; font-weight:300;	color: #fff;	text-align: center;	}
@@ -12,10 +12,16 @@
 		.Tourists div:first-of-type	{	background: #F59594;  }
 		.Citizens div:first-of-type	{	background: #DBDC88;	}
 		.Locals div:first-of-type	{	background: #9DD9E5; }
+        #tableau_wrapper { display: block; width: 1024px; margin:auto;}
 	</style>
 </head>
 <body>
-	<p>Selected example users and all their local posts</p>
+	<p>2 Selected example users from each group and all their local posts. <a href="index.html">Back</a></p>
+    <script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
+    <div id="tableau_wrapper">
+        <div class='tableauPlaceholder' style='width: 1024px; height: 694px;'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Th&#47;Thesis_examples&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='1024' height='694' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Thesis_examples&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Th&#47;Thesis_examples&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+    </div>
+    <br>
 <div id='content'>
     <div class='gallery Tourists '>
         <div><h1> perfectpresent , Tourists </h1></div>
