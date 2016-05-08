@@ -5,41 +5,94 @@
     <title>Thesis_YunjieLi</title>
     <link rel="stylesheet" type="text/css" href="main.css">
     <style type="text/css">
-        #content { width: 100%; margin: auto;}
+        #content { width: 100%; margin: auto; height: 300px;}
 
         p a { color:#fff; }
 
-        .gallery {  
-            display: inline-block; 
-            padding: 10%;
-        }
+        h1 { font-size: 24px; font-weight: 300; text-align: center;}
+
+        .gallery { display: inline-block; padding: 10%; }
 
         .gallery a:hover {    background: #9DD9E5; }
 
         .gallery a {
             text-decoration: none;  color: #fff; font-size: 20px; 
-            height: 30px; width: 100px; padding: 30px;
-            background: #F59594;
+            height: 30px; width: 200px; padding: 30px;  margin-bottom: 300px;      
+            background: #F59594; position: relative;
         }
 
-        .T {    background: #F59594;  }
-        .M {    background: #DBDC88;    }
-        .L {    background: #9DD9E5; }
+        #atlas { 
+            overflow-y:hidden; overflow-x: auto; white-space: nowrap;
+            width: 100%; position: relative; padding-top: 60px;
+            background: #eee;
+        }
+        .map { display: inline-block; width:200px; padding:0 20px 0 0; }
+        .map img { width:100%; background: #fff;}
+
+        .map img:hover { opacity: 0.6 }
+        .map a { padding-bottom: 0px}
+
+        footer { padding-top: 10px; color: #999;}
+
 	</style>
 </head>
 <body>
-<div id="content">
-    <p>In Search of Authenticity - A Case Study of San Francisco Chinatown <a href="gallery_clusters.html">.</a></p>
-    <div class="gallery">
-        <a href="gallery_examples.html" class="T">Groups</a>
+    <h1>In Search of Authenticity - A Case Study of San Francisco Chinatown <a href="gallery_clusters.html">.</a></h1>
+    <div id="content">
+         <div class="gallery">
+            <a href="gallery_examples.html" class="T">Groups</a>
+        </div>
+        <div class="gallery">
+            <a href="gallery_chinatown.html" class="M">#Chinatown</a>
+        </div>
+        <div class="gallery">
+            <a href="cluster_cards.html" class="L">Clusters</a>
+        </div>
     </div>
-    <div class="gallery">
-        <a href="gallery_chinatown.html" class="M">#Chinatown</a>
+    <div id="atlas">
+        <div class="map">
+            <a href="https://public.tableau.com/views/Thesis_ChineseBusinesses/Story?:embed=y&:display_count=yes&:showTabs=y" target="_blank">
+                <img src="https://cloud.githubusercontent.com/assets/12749701/15100494/64691264-1541-11e6-8dd4-042bd2be938c.png">
+            </a>
+            <p>Businesses</p>
+        </div>
+        <div class="map">
+            <a href="https://yligsd.cartodb.com/viz/106d5270-0d52-11e6-8494-0ecd1babdde5/public_map" target="_blank">
+                <img src="https://cloud.githubusercontent.com/assets/12749701/15100463/80396742-1540-11e6-95fc-f27c01e96568.png">
+            </a>
+            <p>#Chinatown and Places</p>
+        </div>
+        <div class="map">
+            <a href="https://yligsd.cartodb.com/viz/8f667d92-0b2f-11e6-bd01-0ecfd53eb7d3/public_map" target="_blank">
+                <img src="https://cloud.githubusercontent.com/assets/12749701/15100465/803caea2-1540-11e6-977f-a37020e08733.png">
+            </a>
+            <p>Groups</p>
+        </div>
+        <div class="map">
+            <a href="https://yligsd.cartodb.com/viz/975c9a42-0b73-11e6-b2ef-0ea31932ec1d/public_map" target="_blank">
+                <img src="https://cloud.githubusercontent.com/assets/12749701/15100468/803eb2c4-1540-11e6-9f0b-9d5db272121f.png">
+            </a>
+            <p>Clusters</p>
+        </div>
+        <div class="map">
+            <a href="https://yligsd.cartodb.com/viz/2834b972-1354-11e6-a19d-0e31c9be1b51/public_map" target="_blank">
+                <img src="https://cloud.githubusercontent.com/assets/12749701/15100466/803cfe8e-1540-11e6-9d27-42593b6bc48c.png">
+            </a>
+            <p>Survey Results</p>
+        </div>
+        <div class="map">
+            <a href="https://yligsd.cartodb.com/viz/d8e814f4-eba3-11e5-bb4a-0ecfd53eb7d3/public_map" target="_blank">
+                <img src="https://cloud.githubusercontent.com/assets/12749701/15100467/803d1478-1540-11e6-9675-d1176ccea209.png">
+            </a>
+            <p>Data Collection</p>
+        </div>
     </div>
-    <div class="gallery">
-        <a href="cluster_cards.html" class="L">Clusters</a>
-    </div>
-</div>
+    <footer>
+        <p>Yunjie Li, 2016</p>
+    </footer>
+
+
+
 
 </body>
 </html>
