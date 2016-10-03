@@ -21,31 +21,29 @@
         p { margin-bottom: 5px; }
 
         #map {
-            position: absolute; top: 0; bottom: 0; width: calc(100% - 300px);
+            position: absolute; top: 0; bottom: 0; width: calc(100% - 320px);
         }
         #sidebar {
-            width: 300px; overflow: auto;
+            width: 320px; overflow: auto;
             background-color: white; border-color: #abbcbe;
         }
         ::-webkit-scrollbar { display: none; }
 
         .slide { 
-            width:100%; 
+            width:100%; min-height: 60px; overflow:overlay;
             transition: opacity .2s ease-in-out;
             -moz-transition: opacity .2s ease-in-out;
             -webkit-transition: opacity .2s ease-in-out;
         }
-        .slide .heading { 
-            height:260px; position:relative; padding-top:70px;
-           /* background-attachment: fixed;*/ background-size: cover;
-        }
-        .slide .heading h1 { font-size: 40px; line-height: 60px; }
-        .slide .heading .caption { position:absolute; bottom:5px; text-align: center; width:100%;}
-        .slide .ps { color:#777; font-size:12px; line-height: 16px; }
+        .slide img { width:48px; margin-left: -14px; position:relative;}
+        .slide img:first-of-type { margin-left: 0px; z-index: 1; }
+        .slide img.lg { width:60px; }
+        .slide strong { color: black; }
+
 
         .slide.active, .slide:hover { background-color: #e9f1f1; color:salmon; opacity:1;}
 
-        .event { max-width: 200px; line-height: 16px; };
+        .event { max-width: 200px; line-height: 16px; z-index: 1};
 
         #footer { background-color: #ddd; }
         #footer p { font-size: 12px; color: #666; line-height:16px; padding: 10px 20px; text-indent: 1em; margin-bottom: 0 }
@@ -59,15 +57,6 @@
             #slideshow { display: flex; flex-direction: row; }
             .slide { flex-basis: auto; flex-shrink:0; }
             .slide .heading { height:200px; width:100vw; padding-top:30px; }
-
-
-            #intro .heading{ 
-                padding:0; height:200px; color: white;
-                background-image: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.8)), url(./img/slide_intro.jpg); background-size: cover; 
-            }
-            #intro p { width:100vw; /*text-indent: 1em;*/ padding:1em 1em; }
-            #intro a { color: #96a8aa; }
-            #intro h2 { font-size: 20px; font-weight: 600; padding: 0 1em; line-height: 26px }
 
             #footer { padding:0; margin:0;}
             #footer p { width:100vw; font-size: 14px; padding:20px;}
