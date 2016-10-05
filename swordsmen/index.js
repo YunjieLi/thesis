@@ -9305,7 +9305,7 @@ function animateJourney(idActive) {
 	    map.fitBounds(lnglat);
 	};
 
-    map.on('moveend', function(){
+    // map.on('moveend', function(){
 
 	   	var counter = 0;
 
@@ -9329,5 +9329,5 @@ function animateJourney(idActive) {
 				counter++;
 			};
 		};
-	});
+	// });
 };
