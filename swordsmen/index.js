@@ -9096,7 +9096,7 @@ var tripActive = {};
 var idActive;
 var animationID;
 
-var segmentNumber = 50;
+var segmentNumber = 3;
 
 window.onload = function() {
 
@@ -9125,7 +9125,7 @@ window.onload = function() {
 
 	$('#intro').addClass('active');
 
-	// createArcs();
+	createArcs();
 	// console.log(JSON.stringify(trips));
 	// console.log(JSON.stringify(events));
 };
@@ -9274,11 +9274,16 @@ function animateJourney(idActive) {
 
 	// cancel the current animation if any
 	cancelAnimationFrame(animationID);
+	tripActive = {
+	"type": "FeatureCollection",
+	"features": []
+	};
 
 	// update the background static layers
 	updateStatic();
 	function updateStatic() {
 		map.getSource('trips-static').setData(empty);
+		map.getSource('trips-active').setData(tripActive);
 	};
 	
     var tripIndex;
@@ -9288,28 +9293,41 @@ function animateJourney(idActive) {
             tripIndex = i;
 	        tripActive = JSON.parse( JSON.stringify(trip) );
 	        tripActive.geometry.coordinates = [];
-	    };
-	    
+	    };    
     });
 
-    var counter = 0;
-	// recursively animate each round of animations
-	animate();
-
-	function animate() {
-
-		if (counter === segmentNumber + 1) {
-
-			cancelAnimationFrame(animationID);	
-
-		} else {
-
-			tripActive.geometry.coordinates.push(trips.features[tripIndex].geometry.coordinates[counter]);
-			// Update the source with this new data.
-			map.getSource('trips-active').setData(tripActive);
-
-			animationID = requestAnimationFrame(animate);
-			counter++;
-		};
+    flytoTrip();
+    function flytoTrip(){
+	    // fly to this trip
+	    var radius = Math.min( turf.lineDistance(trips.features[tripIndex], 'kilometers') *.2, 20 );
+	    var bounds = turf.envelope( turf.buffer(trips.features[tripIndex], radius, 'kilometers') );
+	    var lnglat = [bounds.geometry.coordinates[0][0],bounds.geometry.coordinates[0][2]];
+	    map.fitBounds(lnglat);
 	};
+
+    map.on('moveend', function(){
+
+	   	var counter = 0;
+
+		// recursively animate each round of animation
+		animate();
+
+		function animate() {
+
+			if (counter === segmentNumber + 1) {
+
+				cancelAnimationFrame(animationID);	
+				console.log("cancel");
+
+			} else {
+
+				tripActive.geometry.coordinates.push(trips.features[tripIndex].geometry.coordinates[counter]);
+				// Update the source with this new data.
+				map.getSource('trips-active').setData(tripActive);
+
+				animationID = requestAnimationFrame(animate);
+				counter++;
+			};
+		};
+	});
 };
