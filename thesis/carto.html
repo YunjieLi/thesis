@@ -1,0 +1,211 @@
+<html>
+
+<head>
+    <title>MappingChinatown</title>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    #sidebar {
+        width: 225px;
+        height: 100px;
+        left: 0px;
+        top: 0px;
+        position: absolute;
+    }
+    
+    #cartodb-map {
+        width: calc(100% - 225px);
+        height: 100%;
+        left: 225px;
+        top: 0;
+        right: 0;
+        background: black;
+    }
+    
+    .tour {
+        color: #f66;
+        border-color: #f66;
+    }  
+    .tour:hover, .tour.active {
+        background-color: #f66;
+    }    
+    .sf {
+        color: #dd5;
+        border-color: #dd5;
+    }    
+    .sf:hover, .sf.active {
+        background-color: #dd5;
+    }    
+    .loc {
+        color: #3cc;
+        border-color: #3cc;
+    }
+    .loc:hover, .loc.active {
+        background-color: #3cc;
+    }
+    
+    h1 {
+        font-size: 20px;
+        text-align: center
+    }    
+    h2 {
+        font-size: 14px;
+        text-align: center;
+    }
+    
+    .panel {
+        margin-bottom: inherit;
+    }
+    .filter-group {
+        display: flex;
+    }
+    .filter {
+        flex-grow: 1;
+        text-align: center;
+        height:40px;
+        line-height: 40px;
+    }
+    .filter:hover, .filter.active {
+      color:white;
+      cursor: pointer;
+    }
+
+    .hide {
+      display:none;
+    }
+
+    </style>
+</head>
+
+<body onload="init()">
+    <div id="sidebar">
+        <h1>Mapping SF Chinatown</h1>
+        <div class="panel" id="panel-density">
+            <h2>Kernel Density</h2>
+            <div class="filter-group pill">
+                <div class="kernel filter tour">Tourists</div>
+                <div class="kernel filter sf">FromSF</div>
+                <div class="kernel filter loc">Locals</div>
+            </div>
+        </div>
+        <div class="panel" id="panel-cluster">
+            <h2>DBSCAN Clusters</h2>
+            <div class="filter-group pill">
+                <div class="cluster filter tour">Tourists</div>
+                <div class="cluster filter sf">FromSF</div>
+                <div class="cluster filter loc">Locals</div>
+            </div>
+        </div>
+    </div>
+    <div id='cartodb-map'></div>
+    <script>
+
+    function init() {
+        // initiate leaflet map
+        var map = new L.Map('cartodb-map', {
+            center: [37.794375, -122.405841],
+            zoom: 16
+        });
+
+        // add baselayer
+        L.tileLayer('http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png', {
+            attribution: 'Stamen'
+        }).addTo(map);
+
+        //[den_sf, den_loc, den_tour, aoi, aoi_points]
+        var layerSource = {
+            user_name: 'yligsd',
+            type: 'cartodb',
+            sublayers: [{
+                sql: "SELECT * FROM density_fromsf", // kernel-fromSF
+                cartocss: '#density_fromsf {line-width: 0; polygon-fill:#dddd55} #density_fromsf[gridcode=2] {polygon-opacity: 0.2;} #density_fromsf[gridcode=3] {polygon-opacity: 0.4;} #density_fromsf[gridcode=4] {polygon-opacity: 0.6;} #density_fromsf[gridcode=5] {polygon-opacity: 0.8;}'
+            }, {
+                sql: "SELECT * FROM density_loc", // kernel-local
+                cartocss: '#density_loc {line-width: 0; polygon-fill:#33cccc} #density_loc[gridcode=2] {polygon-opacity: 0.2;} #density_loc[gridcode=3] {polygon-opacity: 0.4;} #density_loc[gridcode=4] {polygon-opacity: 0.6;} #density_loc[gridcode=5] {polygon-opacity: 0.8;}'
+            }, {
+                sql: "SELECT * FROM density_tour", // kernel-tourist
+                cartocss: '#density_tour {line-width: 0; polygon-fill:#ff6666} #density_tour[gridcode=2] {polygon-opacity: 0.2;} #density_tour[gridcode=3] {polygon-opacity: 0.4;} #density_tour[gridcode=4] {polygon-opacity: 0.6;} #density_tour[gridcode=5] {polygon-opacity: 0.8;}'
+            }, {
+                sql: "SELECT * FROM aoi_merge", // dbscan-all
+                cartocss: '#aoi_merge { polygon-opacity: 0.7; line-color: #FFF; line-width: 2; line-opacity: 1; } #aoi_merge[_group="FromSF"] {polygon-fill: #dddd55;} #aoi_merge[_group="Locals"] {polygon-fill: #33cccc;} #aoi_merge[_group="Tourists"] {polygon-fill: #ff6666;}'
+            }, {
+                sql: "select * from points_clusters_joinjoin", // points in clusters
+                cartocss: '#points_clusters_joinjoin {marker-fill-opacity: 1;marker-line-width: 0;marker-placement: point;marker-type: ellipse;marker-width: 5;marker-allow-overlap: true;} #points_clusters_joinjoin[_group="FromSF"] {marker-fill: #bbbb44;} #points_clusters_joinjoin[_group="Locals"] { marker-fill: #55cccc;} #points_clusters_joinjoin[_group="Tourists"] {   marker-fill: #dd5555;}'
+            }, ]
+        };
+
+        // For storing the sublayers
+        var sublayers = [];
+
+        // Add data layer to your map
+        cartodb.createLayer(map, layerSource)
+            .addTo(map)
+            .done(function(layer) {
+                for (var i = 0; i < layer.getSubLayerCount(); i++) {
+                    sublayers[i] = layer.getSubLayer(i);
+                    sublayers[i].hide();
+                }
+                sublayers[3].show();
+                // sublayers[4].show();
+            })
+            .error(function(err) {
+                console.log("error: " + err);
+            });
+
+        $(".kernel").on('click', function() {
+            if ($(this).hasClass('active')) {
+                $(".kernel").removeClass('active');
+                sublayers[0].show();
+                sublayers[1].show();
+                sublayers[2].show();
+            } else {
+                sublayers[0].hide();
+                sublayers[1].hide();
+                sublayers[2].hide();
+                if( $(this).hasClass('sf') ) {
+                    sublayers[0].show();
+                } else if( $(this).hasClass('loc') ) {
+                    sublayers[1].show();
+                } else {
+                    sublayers[2].show();
+                };
+                $(".kernel").removeClass('active');
+                $(this).toggleClass('active');
+            };
+        });
+
+        $(".cluster").on('click', function() {
+            var sql = "SELECT * FROM aoi_merge";
+            if ( $(this).hasClass('active') ) {
+                $(".cluster").removeClass('active');
+            } else {
+                if( $(this).hasClass('sf') ) {
+                    sql = "SELECT * FROM aoi_merge where _group = 'FromSF'";
+                } else if( $(this).hasClass('loc') ) {
+                    sql = "SELECT * FROM aoi_merge where _group = 'Locals'";
+                } else {
+                    sql = "SELECT * FROM aoi_merge where _group = 'Tourists'";
+                };
+            };
+            sublayers[3].setSQL(sql);
+            $(this).toggleClass('active');
+            // sublayers[4].setSQL("SELECT * FROM points_clusters_joinjoin where _group = 'Locals'");
+            // sublayers[4].show();
+        });
+    };
+    </script>
+</body>
+
+</html>
