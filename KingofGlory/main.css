@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.avatar {
+    border: 3px solid #2b3e50;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background-size: 50px 50px;
+    background-position: center;
+    box-shadow: 3px 3px 3px #333;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.avatar:hover {
+    z-index: 100;
+    border-color: #df691a;
+    box-shadow: 6px 6px 3px #333;
+}
+
+.modal {
+    background-color: rgba(0,0,0,.6);
+}
+
+.modal-content {
+    margin: 5vw;
+    background-size: cover;
+}
+
+.container {
+    background
+}
+
+/*utilities*/
+.material-icons {
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.mt-1 {
+    margin-top: 1em;
+}
+
+.p1 {
+    padding: 1em;
+}

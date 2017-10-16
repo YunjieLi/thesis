@@ -1,62 +1,71 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8' />
     <title>Glorious Kings</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://bootswatch.com/superhero/bootstrap.min.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link href='./main.css' rel='stylesheet' />
     <script src='./heroes.js'></script>
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
 </head>
+
 <body>
+    <div class="modal">
+        <div class="modal-content jumbotron p1">
+            <h1 class='name'>Name</h1>
+            <p class='description mt-1'>Description</p>
+            <p><small>
+                <i class="material-icons">person</i><span class='more'>Time | Source</span><br>
+                <i class="material-icons">room</i><span class='location'>Location</span>
+            </small></p>
+            <p><a class='btn btn-default mt-1' href='#' target='_blank'>Learn more</a></p>
+        </div>
+    </div>
+    <div id='map'></div>
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA';
 
-<style>
-.marker {
-    display: block;
-    border: 1px solid white;
-    border-radius: 25%;
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    background-size: cover;
-}
-</style>
-
-<div id='map'></div>
-
-<script>
-mapboxgl.accessToken = 'pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA';
-
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v9',
-    center: [-65.017, -16.457],
-    zoom: 5,
-    hash: true
-});
-
-// add markers to map
-heroes.features.forEach(function(marker) {
-    // create a DOM element for the marker
-    var el = document.createElement('div');
-    el.className = 'marker hero';
-    el.style.backgroundImage = 'url(./img/avatars/' + marker.properties.id + '.jpg)';
-
-    el.addEventListener('click', function() {
-        console.log(marker.properties.name);
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v9',
+        center: [73.54,39.03],
+        zoom: 2,
+        hash: true
     });
 
-    // add marker to map
-    new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(map);
-});
-</script>
+    // add markers to map
+    heroes.features.forEach(function(marker) {
+        // create a DOM element for the marker
+        var el = document.createElement('a');
+        el.className = 'avatar hero' + marker.properties.id;
+        el.style.backgroundImage = "url(./img/avatars/" + marker.properties.id + ".jpg)";
 
+        el.addEventListener('click', function() {
+            $('.modal-content').css('backgroundImage', 'url(https://' + marker.properties.bg + ')');
+            $('.modal .name').text(marker.properties.name);
+            $('.modal .description').text(marker.properties.description);
+            $('.modal .more').text(marker.properties.fictious + " · " + marker.properties.Time_ZH);
+            $('.modal .location').text(marker.properties.location);
+            $('.modal .btn').attr('href', marker.properties.href);
+            $('.modal').show();
+        });
+
+        // add marker to map
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+    });
+
+    $('.modal').click(function() {
+        $(this).hide();
+    });
+    </script>
 </body>
+
 </html>
