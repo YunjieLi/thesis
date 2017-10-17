@@ -10,6 +10,15 @@ body {
     width: 100%;
 }
 
+.mapboxgl-marker {
+    display:flex;
+    align-items: center;
+    align-content: center;
+}
+.mapboxgl-marker:hover {
+    z-index: 9999;
+}
+
 .avatar {
     border: 3px solid #2b3e50;
     border-radius: 50%;
@@ -18,11 +27,25 @@ body {
     background-size: 50px 50px;
     background-position: center;
     box-shadow: 3px 3px 3px #333;
-    transition: border-color .3s, box-shadow .3s;
+    transition: all .3s;
+}
+
+.avatar.avatar-s {
+    width: 32px;
+    height: 32px;
+    background-size: 36px 36px;
+    border-width: 2px;
+}
+
+.avatar.avatar-xs {
+    width: 24px;
+    height: 24px;
+    background-size: 27px 27px;
+    border-width: 1px;
 }
 
 .avatar:hover {
-    z-index: 100;
+    transform: scale(1.2,1.2);
     border-color: #df691a;
     box-shadow: 6px 6px 3px #333;
 }
@@ -34,10 +57,6 @@ body {
 .modal-content {
     margin: 5vw;
     background-size: cover;
-}
-
-.container {
-    background
 }
 
 /*utilities*/

@@ -33,7 +33,7 @@
 
     var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/dark-v9',
+        style: 'mapbox://styles/yunjieli/cj8v6a1b2f0f62rnz9yh0373m',
         center: [73.54,39.03],
         zoom: 2,
         hash: true
@@ -42,11 +42,13 @@
     // add markers to map
     heroes.features.forEach(function(marker) {
         // create a DOM element for the marker
-        var el = document.createElement('a');
-        el.className = 'avatar hero' + marker.properties.id;
-        el.style.backgroundImage = "url(./img/avatars/" + marker.properties.id + ".jpg)";
+        var el = document.createElement('div'); 
+        var avatar = document.createElement('div');
+        avatar.className = 'avatar avatar-xs' + marker.properties.id;
+        avatar.style.backgroundImage = "url(./img/avatars/" + marker.properties.id + ".jpg)";
 
-        el.addEventListener('click', function() {
+        avatar.addEventListener('click', function(e) {
+            e.stopPropagation();
             $('.modal-content').css('backgroundImage', 'url(https://' + marker.properties.bg + ')');
             $('.modal .name').text(marker.properties.name);
             $('.modal .description').text(marker.properties.description);
@@ -55,12 +57,26 @@
             $('.modal .btn').attr('href', marker.properties.href);
             $('.modal').show();
         });
+        el.appendChild(avatar);
 
         // add marker to map
         new mapboxgl.Marker(el)
             .setLngLat(marker.geometry.coordinates)
             .addTo(map);
     });
+
+    map.on('zoom', function() {
+        var zoom = map.getZoom();
+        if (zoom<2) {
+            $('.avatar').removeClass('avatar-s');
+            $('.avatar').addClass('avatar-xs');
+        } else if (zoom<4) {
+            $('.avatar').removeClass('avatar-xs');
+            $('.avatar').addClass('avatar-s');
+        } else {
+            $('.avatar').removeClass('avatar-xs avatar-s');
+        }
+});
 
     $('.modal').click(function() {
         $(this).hide();
