@@ -10,13 +10,13 @@ body {
     width: 100%;
 }
 
-.mapboxgl-marker {
+.avatar-container {
     display:flex;
     align-items: center;
     align-content: center;
 }
-.mapboxgl-marker:hover {
-    z-index: 9999;
+.avatar-container:hover {
+    z-index: 1000;
 }
 
 .avatar {
@@ -28,6 +28,9 @@ body {
     background-position: center;
     box-shadow: 3px 3px 3px #333;
     transition: all .3s;
+}
+.avatar:not(:first-child) {
+    margin-left: -12px;
 }
 
 .avatar.avatar-s {

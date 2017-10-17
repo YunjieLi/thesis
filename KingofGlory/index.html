@@ -39,31 +39,59 @@
         hash: true
     });
 
-    // add markers to map
-    heroes.features.forEach(function(marker) {
-        // create a DOM element for the marker
-        var el = document.createElement('div'); 
-        var avatar = document.createElement('div');
-        avatar.className = 'avatar avatar-xs' + marker.properties.id;
-        avatar.style.backgroundImage = "url(./img/avatars/" + marker.properties.id + ".jpg)";
-
-        avatar.addEventListener('click', function(e) {
-            e.stopPropagation();
-            $('.modal-content').css('backgroundImage', 'url(https://' + marker.properties.bg + ')');
-            $('.modal .name').text(marker.properties.name);
-            $('.modal .description').text(marker.properties.description);
-            $('.modal .more').text(marker.properties.fictious + " · " + marker.properties.Time_ZH);
-            $('.modal .location').text(marker.properties.location);
-            $('.modal .btn').attr('href', marker.properties.href);
-            $('.modal').show();
-        });
-        el.appendChild(avatar);
-
-        // add marker to map
-        new mapboxgl.Marker(el)
-            .setLngLat(marker.geometry.coordinates)
-            .addTo(map);
+    var heroMap = new Map();
+    heroes.forEach(function(hero) {
+        const precision = 1000000;
+        var lnglat = Math.round(hero.lng*precision)/precision 
+                    + "," + Math.round(hero.lat*precision)/precision;
+        if (!heroMap.has(lnglat)) {
+            heroMap.set(lnglat, []);
+        }
+        heroMap.get(lnglat).push(hero);
     });
+
+    function drawMarkers() {
+        for (var lnglat of heroMap.keys()) {
+            var coordinates = [parseFloat(lnglat.split(',')[0]), parseFloat(lnglat.split(',')[1])];
+            var shortlist = heroMap.get(lnglat);
+
+            // container div
+            var el = document.createElement('div');
+            el.className = 'avatar-container';
+
+            // all avatars of this location
+            shortlist.forEach(function(hero) {
+
+                // marker
+                var avatar = document.createElement('div');
+                avatar.className = 'avatar avatar-xs' + hero.id;
+                avatar.style.backgroundImage = "url(./img/avatars/" 
+                                                + hero.id + ".jpg)";
+
+                // popup
+                avatar.addEventListener('click', function() {
+                    $('.modal-content').css('backgroundImage', 'url(https://' + hero.bg + ')');
+                    $('.modal .name').text(hero.name);
+                    $('.modal .description').text(hero.description);
+                    $('.modal .more').text(hero.fictious + " · " + hero.time);
+                    $('.modal .location').text(hero.location);
+                    $('.modal .btn').attr('href', hero.href);
+                    $('.modal').show();
+                });
+                // add to container
+                el.appendChild(avatar);
+            });
+
+            // add marker to map
+            new mapboxgl.Marker(el)
+                .setLngLat(coordinates)
+                .addTo(map);    
+        }    
+    }
+
+    map.on('load', function() {
+        drawMarkers();
+    })
 
     map.on('zoom', function() {
         var zoom = map.getZoom();
