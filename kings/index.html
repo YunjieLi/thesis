@@ -113,7 +113,7 @@
 
     map.on('zoom', function() {
         var zoom = map.getZoom();
-        if (zoom < 4) {
+        if (zoom < 3) {
             $('.avatar').removeClass('avatar-s');
             $('.avatar').addClass('avatar-xs');
         } else if (zoom < 5) {

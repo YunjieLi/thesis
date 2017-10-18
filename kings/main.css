@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.avatar-container {
+    display:flex;
+    align-items: center;
+    align-content: center;
+}
+.avatar-container:hover {
+    z-index: 1000;
+}
+
+.avatar {
+    border: 1px solid #22264b;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    background-size: 54px 54px;
+    background-position: center;
+    box-shadow: 3px 3px 3px #333;
+    transition: all .4s;
+}
+.avatar:not(:first-child) {
+    margin-left: -12px;
+}
+
+.avatar.avatar-s {
+    width: 24px;
+    height: 24px;
+    background-size: 28px 28px;
+    box-shadow: 1px 1px 2px #222;
+}
+
+.avatar.avatar-xs {
+    width: 12px;
+    height: 12px;
+    border-width: 6px;
+    box-shadow: 1px 1px 3px #111
+}
+.avatar:not(:first-child) {
+    margin-left: -6px;
+}
+
+.avatar:hover {
+    transform: scale(1.2,1.2);
+    box-shadow: 4px 4px 4px #222;
+}
+
+.modal-content {
+    margin: 5vw;
+    background-size: cover;
+    background-position: center;
+}
+
+/*utilities*/
+.material-icons {
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.mt-1 {
+    margin-top: 1em;
+}
+
+.p1 {
+    padding: 1em;
+}
+
+.color-history {
+    border-color: #f8e9a1;
+}
+.color-legend {
+    border-color: #f76c6c;
+}
+.color-art {
+    border-color: #374785;
+}
+.color-original {
+    border-color: #24305e;
+}
