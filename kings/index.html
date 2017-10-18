@@ -5,13 +5,14 @@
     <meta charset='utf-8' />
     <title>Glorious Kings</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href='https://bootswatch.com/superhero/bootstrap.min.css' rel='stylesheet' />
+    <link href='./main.css' rel='stylesheet' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
-    <link href='https://bootswatch.com/superhero/bootstrap.min.css' rel='stylesheet' />
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <link href='./main.css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src='./heroes.js'></script>
 </head>
 
@@ -34,16 +35,23 @@
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/yunjieli/cj8v6a1b2f0f62rnz9yh0373m',
-        center: [73.54,39.03],
+        center: [73.54, 39.03],
         zoom: 2,
         hash: true
     });
 
+    var dictionary = {
+        '历史人物': 'history',
+        '神话传说': 'legend',
+        '艺术作品': 'art',
+        '游戏虚构': 'original'
+    };
+
     var heroMap = new Map();
     heroes.forEach(function(hero) {
         const precision = 1000000;
-        var lnglat = Math.round(hero.lng*precision)/precision 
-                    + "," + Math.round(hero.lat*precision)/precision;
+        var lnglat = Math.round(hero.lng * precision) / precision +
+            "," + Math.round(hero.lat * precision) / precision;
         if (!heroMap.has(lnglat)) {
             heroMap.set(lnglat, []);
         }
@@ -64,21 +72,25 @@
 
                 // marker
                 var avatar = document.createElement('div');
-                avatar.className = 'avatar avatar-xs' + hero.id;
-                avatar.style.backgroundImage = "url(./img/avatars/" 
-                                                + hero.id + ".jpg)";
+                avatar.className = 'avatar avatar-xs color-' +
+                    dictionary[hero.fictious] + ' h' +
+                    hero.id;
+                avatar.style.backgroundImage = "url(./img/avatars/" +
+                    hero.id + ".jpg)";
+                $(avatar).attr('data-toggle', 'tooltip');
+                $(avatar).attr('data-placement', 'bottom');
+                $(avatar).attr('data-original-title', hero.name);
 
                 // popup
                 avatar.addEventListener('click', function() {
-                    var bg = 'linear-gradient(to right, rgba(34,38,75,0.9), rgba(34,38,75,0)), url(' + hero.bg + ')';
-                    $('.modal-content').css('background', bg);
+                    $('.modal-content').css('backgroundImage', 'url(https://' + hero.bg + ')');
                     $('.modal .name').text(hero.name);
                     $('.modal .description').text(hero.description);
                     $('.modal .more').text(hero.fictious + " · " + hero.time);
                     $('.modal .location').text(hero.location);
                     $('.modal .btn').attr('href', hero.href);
                     $('.modal').show();
-                    $('#map').css('filter','blur(1px)');
+                    $('#map').css('filter', 'blur(1px)');
                 });
                 // add to container
                 el.appendChild(avatar);
@@ -87,30 +99,34 @@
             // add marker to map
             new mapboxgl.Marker(el)
                 .setLngLat(coordinates)
-                .addTo(map);    
-        }    
+                .addTo(map);
+        }
     }
 
     map.on('load', function() {
         drawMarkers();
+
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     })
 
     map.on('zoom', function() {
         var zoom = map.getZoom();
-        if (zoom<2) {
+        if (zoom < 4) {
             $('.avatar').removeClass('avatar-s');
             $('.avatar').addClass('avatar-xs');
-        } else if (zoom<4) {
+        } else if (zoom < 5) {
             $('.avatar').removeClass('avatar-xs');
             $('.avatar').addClass('avatar-s');
         } else {
             $('.avatar').removeClass('avatar-xs avatar-s');
         }
-});
+    });
 
     $('.modal').click(function() {
         $(this).hide();
-        $('#map').css('filter','none');
+        $('#map').css('filter', 'none');
     });
     </script>
 </body>
