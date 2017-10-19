@@ -17,8 +17,8 @@
 </head>
 
 <body>
-    <div class="modal">
-        <div class="modal-content jumbotron p1">
+    <div class='modal'>
+        <div class="modal-content jumbotron p2">
             <h1 class='name'>Name</h1>
             <p class='description mt-1'>Description</p>
             <p><small>
@@ -29,6 +29,23 @@
         </div>
     </div>
     <div id='map'></div>
+    <div class='overlay timeline'>
+        <div class='time-header'>按时代</div>
+        <div class='time'>上古</div>
+        <div class='time'>商周</div>
+        <div class='time'>春秋战国</div>
+        <div class='time'>希腊罗马</div>
+        <div class='time'>楚汉相争</div>
+        <div class='time'>汉</div>
+        <div class='time'>三国</div>
+        <div class='time'>南北朝</div>
+        <div class='time'>隋唐</div>
+        <div class='time'>唐</div>
+        <div class='time'>元</div>
+        <div class='time'>幕府时代</div>
+        <div class='time'>虚空</div>
+        <div class='time-chevron'>&#9656;</div>
+    </div>
     <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA';
 
@@ -37,6 +54,7 @@
         style: 'mapbox://styles/yunjieli/cj8v6a1b2f0f62rnz9yh0373m',
         center: [73.54, 39.03],
         zoom: 2,
+        maxZoom: 10,
         hash: true
     });
 
@@ -72,7 +90,7 @@
 
                 // marker
                 var avatar = document.createElement('div');
-                avatar.className = 'avatar avatar-xs color-' +
+                avatar.className = 'avatar avatar-s color-' +
                     dictionary[hero.fictious] + ' h' +
                     hero.id;
                 avatar.style.backgroundImage = "url(./img/avatars/" +
@@ -90,7 +108,7 @@
                     $('.modal .location').text(hero.location);
                     $('.modal .btn').attr('href', hero.href);
                     $('.modal').show();
-                    $('#map').css('filter', 'blur(1px)');
+                    $('#map').css('filter', 'blur(2px)');
                 });
                 // add to container
                 el.appendChild(avatar);
@@ -109,24 +127,57 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip();
         });
-    })
 
-    map.on('zoom', function() {
-        var zoom = map.getZoom();
-        if (zoom < 3) {
-            $('.avatar').removeClass('avatar-s');
-            $('.avatar').addClass('avatar-xs');
-        } else if (zoom < 5) {
-            $('.avatar').removeClass('avatar-xs');
-            $('.avatar').addClass('avatar-s');
-        } else {
-            $('.avatar').removeClass('avatar-xs avatar-s');
-        }
-    });
+        $('.time-chevron').click(function() {
+            $(this).toggleClass('collapsed');
+            $('.timeline').toggleClass('collapsed');
+            $('.time').toggle();
+        });
 
-    $('.modal').click(function() {
-        $(this).hide();
-        $('#map').css('filter', 'none');
+        map.on('zoom', function() {
+            var zoom = map.getZoom();
+            if (zoom < 3) {
+                $('.avatar').removeClass('avatar-s');
+                $('.avatar').addClass('avatar-xs');
+            } else if (zoom < 5) {
+                $('.avatar').removeClass('avatar-xs');
+                $('.avatar').addClass('avatar-s');
+            } else {
+                $('.avatar').removeClass('avatar-xs avatar-s');
+            }
+        });
+
+        $('.modal').click(function() {
+            $(this).hide();
+            $('#map').css('filter', 'none');
+        });
+        
+        $('.time').click(function() {
+            if($(this).hasClass('active')) {
+                $(this).removeClass('active');
+                $('.avatar').show();
+            } else {
+                $('.time').removeClass('active');
+                $(this).addClass('active');
+                var now = this.innerHTML;
+                var live = heroes.filter(function(hero) {
+                    return (hero.time === now);
+                });
+                $('.avatar').hide();
+
+                var lngMin, lngMax, latMin, latMax;
+                live.forEach(function(hero) {
+                    $('.h'+hero.id).show();
+                    lngMin = lngMin ? Math.min(lngMin, hero.lng) : hero.lng;
+                    lngMax = lngMax ? Math.max(lngMax, hero.lng) : hero.lng;
+                    latMin = latMin ? Math.min(latMin, hero.lat) : hero.lat;
+                    latMax = latMax ? Math.max(latMax, hero.lat) : hero.lat;
+                });
+                var bbox = [ [lngMin,latMin],[lngMax,latMax] ];
+                map.fitBounds(bbox, { padding: 60 });
+            }
+        });
+
     });
     </script>
 </body>

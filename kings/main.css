@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #map {
@@ -61,6 +62,71 @@ body {
     background-position: center;
 }
 
+.overlay {
+    position: absolute;
+    margin: 1em 0;
+    background-color: rgba(43,62,80,.8);
+}
+@media only screen and (max-width: 640px) {
+    .overlay {
+        margin: 0;
+    }
+    .modal-content {
+        margin-top: 120px;
+    }
+}
+
+.timeline {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    max-width: 600px;
+    height: 90px;
+    padding: 0 6px 0 12px;
+    display: flex;
+    flex-direction: column;  
+    writing-mode: vertical-lr;
+    justify-content: space-between;
+    /*the two below makes it scrollable*/
+    overflow-x: scroll;
+    position: fixed;
+    transition: all .4s ease-in;
+}
+.timeline.collapsed {
+    width: 72px;
+}
+.time {
+    padding: 12px 6px;
+    transition: background-color .1s;
+}
+.time-header {
+    padding: 1em 0;
+    text-align: center;
+    color: #738496
+}
+.time-chevron {
+    padding: 1em 0;
+    text-align: center;
+    color: #738496;
+    transform: rotate(180deg);
+    animation transform: .4s;
+    cursor: pointer;
+}
+.time-chevron:hover {
+    color: #df691a;
+}
+.time-chevron.collapsed {
+    transform: rotate(0deg);
+}
+
+.time:hover {
+    background-color: #546575;
+    cursor: pointer;
+}
+.time.active {
+    background-color: #df691a;
+}
+
 /*utilities*/
 .material-icons {
     vertical-align: middle;
@@ -71,8 +137,8 @@ body {
     margin-top: 1em;
 }
 
-.p1 {
-    padding: 1em;
+.p2 {
+    padding: 2em;
 }
 
 .color-history {
