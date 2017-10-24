@@ -5,6 +5,7 @@
     <meta charset='utf-8' />
     <title>Glorious Kings</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="manifest" href="../img/favicon/manifest.json">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://bootswatch.com/superhero/bootstrap.min.css' rel='stylesheet' />
     <link href='./main.css' rel='stylesheet' />
@@ -46,18 +47,20 @@
         <div class='time'>虚空</div>
         <div class='time-chevron'>&#9656;</div>
     </div>
+    <div class='overlay legend'>
+        <div class='bucket'>
+            <div class='circle color-history'></div>历史人物
+        </div>
+        <div class='bucket'>
+            <div class='circle color-legend'></div>神话传说
+        </div>
+        <div class='bucket'>
+            <div class='circle color-art'></div>文艺作品
+        </div>
+        <div class='bucket'>
+            <div class='circle color-original'></div>游戏虚构
+        </div>
     <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA';
-
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/yunjieli/cj8v6a1b2f0f62rnz9yh0373m',
-        center: [73.54, 39.03],
-        zoom: 2,
-        maxZoom: 10,
-        hash: true
-    });
-
     var dictionary = {
         '历史人物': 'history',
         '神话传说': 'legend',
@@ -65,7 +68,27 @@
         '游戏虚构': 'original'
     };
 
+    var isMobile = detectMobile();
+    var bboxAll = [[-0.3817805,23.113628],[140.3326038,51.528308]];
+
+    function detectMobile() {
+       if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+         return true;
+       } else {
+         return false;
+       }
+    }
+
+    function fitMap( bbox ) {
+        var viewportPT = isMobile ? 90 : 100;
+        var viewportPB = isMobile ? 30 : 60;
+        var viewportPY = isMobile ? 10 : 30;
+        map.fitBounds(bbox, { padding: {top:viewportPT, left:viewportPY, right:viewportPY, bottom:viewportPB} });
+    }
+
     var heroMap = new Map();
+    // assuming the earlier on the list, the more important the hero is
+
     heroes.forEach(function(hero) {
         const precision = 1000000;
         var lnglat = Math.round(hero.lng * precision) / precision +
@@ -90,7 +113,7 @@
 
                 // marker
                 var avatar = document.createElement('div');
-                avatar.className = 'avatar avatar-s color-' +
+                avatar.className = 'avatar avatar-s border-' +
                     dictionary[hero.fictious] + ' h' +
                     hero.id;
                 avatar.style.backgroundImage = "url(./img/avatars/" +
@@ -120,6 +143,17 @@
                 .addTo(map);
         }
     }
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoieXVuamllbGkiLCJhIjoiY2lxdmV5MG5rMDAxNmZta3FlNGhyMmpicSJ9.CTEQgAyZGROcpJouZuzJyA';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/yunjieli/cj8v6a1b2f0f62rnz9yh0373m',
+        maxZoom: 10,
+        hash: true
+    });
+
+    fitMap(bboxAll);
 
     map.on('load', function() {
         drawMarkers();
@@ -153,9 +187,12 @@
         });
         
         $('.time').click(function() {
+            // all heroes
+            var bbox;
             if($(this).hasClass('active')) {
                 $(this).removeClass('active');
                 $('.avatar').show();
+                bbox = bboxAll;
             } else {
                 $('.time').removeClass('active');
                 $(this).addClass('active');
@@ -173,9 +210,9 @@
                     latMin = latMin ? Math.min(latMin, hero.lat) : hero.lat;
                     latMax = latMax ? Math.max(latMax, hero.lat) : hero.lat;
                 });
-                var bbox = [ [lngMin,latMin],[lngMax,latMax] ];
-                map.fitBounds(bbox, { padding: 60 });
+                bbox = [ [lngMin,latMin],[lngMax,latMax] ];
             }
+            fitMap(bbox);
         });
 
     });
