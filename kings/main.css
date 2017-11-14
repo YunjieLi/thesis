@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-size: 14px;
 }
 
 #map {
@@ -37,16 +38,11 @@ body {
 .avatar.avatar-s {
     width: 24px;
     height: 24px;
-    background-size: 28px 28px;
-    box-shadow: 1px 1px 2px #222;
+    background-size: 100% 100%;
+    box-shadow: none;
+    border-width: 0px;
 }
 
-.avatar.avatar-xs {
-    width: 12px;
-    height: 12px;
-    border-width: 6px;
-    box-shadow: 1px 1px 3px #111
-}
 .avatar:not(:first-child) {
     margin-left: -6px;
 }
@@ -57,9 +53,14 @@ body {
 }
 
 .modal-content {
-    margin: 5vw;
+    margin: 20vh 5vw;
     background-size: cover;
     background-position: center;
+    text-shadow: 1px 1px 1px #000;
+}
+.modal-content .btn {
+    text-shadow: none;
+    opacity: .8;
 }
 
 .overlay {
@@ -175,6 +176,7 @@ body {
 .color-original {
     background-color: #24305e;
 }
+
 .border-history {
     border-color: #f8e9a1;
 }
@@ -184,6 +186,19 @@ body {
 .border-art {
     border-color: #374785;
 }
-.border-original {
+.border-orginal {
     border-color: #24305e;
+}
+
+.avatar-s.border-history {
+    background-image: url(./img/icon_history.svg) !important;
+}
+.avatar-s.border-legend {
+    background-image: url(./img/icon_legend.svg) !important;
+}
+.avatar-s.border-art {
+    background-image: url(./img/icon_art.svg) !important;
+}
+.avatar-s.border-original {
+    background-image: url(./img/icon_original.svg) !important;
 }

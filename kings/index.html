@@ -22,7 +22,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href='https://bootswatch.com/superhero/bootstrap.min.css' rel='stylesheet' />
+    <link href='../static/superhero.min.css' rel='stylesheet' />
     <link href='./main.css' rel='stylesheet' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.41.0/mapbox-gl.css' rel='stylesheet' />
@@ -56,7 +56,6 @@
         <div class='time'>三国</div>
         <div class='time'>南北朝</div>
         <div class='time'>隋唐</div>
-        <div class='time'>唐</div>
         <div class='time'>元</div>
         <div class='time'>幕府时代</div>
         <div class='time'>虚空</div>
@@ -185,14 +184,10 @@
 
         map.on('zoom', function() {
             var zoom = map.getZoom();
-            if (zoom < 3) {
-                $('.avatar').removeClass('avatar-s');
-                $('.avatar').addClass('avatar-xs');
-            } else if (zoom < 5) {
-                $('.avatar').removeClass('avatar-xs');
+            if (zoom < 5) {
                 $('.avatar').addClass('avatar-s');
             } else {
-                $('.avatar').removeClass('avatar-xs avatar-s');
+                $('.avatar').removeClass('avatar-s');
             }
         });
 
