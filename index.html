@@ -1,140 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Thesis_YunjieLi</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link href='https://bootswatch.com/yeti/bootstrap.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href='./static/yeti.min.css' rel='stylesheet' />
     <style type="text/css">
+    .container {
+        padding: 0px;
+    }
 
-        .container { padding: 0px; }
-        .thumbnail{ transition: opacity .3s ease; }
-        .thumbnail:hover { opacity:.7; }
-        a:hover { text-decoration: none; }
-        a:visited { text-decoration: none }
+    .thumbnail {
+        transition: opacity .3s ease;
+    }
 
-        #cover { 
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)), url(./img/chinatown2.jpg); background-width: 100%;
-            background-attachment: fixed;
-            color: #fff; text-align: center;
-        }
-        #cover h1 { font-weight: 400; font-size: 4em; }
-        #cover p { font-weight: 300 }
+    .thumbnail:hover {
+        opacity: .7;
+    }
 
-        #content { padding: 6em 4em; }
+    a:hover {
+        text-decoration: none;
+    }
 
-        .link { 
-            padding:2em 0; border-radius: 3px; border-width: 0; box-shadow: none; 
-            text-align: center; color:#fff; background: #9D2933;
-        }
-        .link:hover { color: #fff; }
-        .link h3 { margin:0; }
+    a:visited {
+        text-decoration: none
+    }
 
-        .map { border-width: 0; background-color: #E0EEE8; margin-bottom: 4em;  }
-        .map h3 { padding-left:15px; }
-        .map p { color:#75878A; padding:15px; }
+    #cover {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)), url(./img/chinatown2.jpg);
+        background-width: 100%;
+        background-attachment: fixed;
+        color: #fff;
+        text-align: center;
+    }
 
-        footer { padding-top: 10px; color:#758A99; text-align: center; }
-        footer p { margin-bottom: 0; padding:10px; }
+    #cover h1 {
+        font-weight: 400;
+        font-size: 4em;
+    }
 
-	</style>
+    #cover p {
+        font-weight: 300
+    }
+
+    #content {
+        padding: 6em 4em;
+    }
+
+    .link {
+        padding: 2em 0;
+        border-radius: 3px;
+        border-width: 0;
+        box-shadow: none;
+        text-align: center;
+        color: #fff;
+        background: #9D2933;
+    }
+
+    .link:hover {
+        color: #fff;
+    }
+
+    .link h3 {
+        margin: 0;
+    }
+
+    .map {
+        border-width: 0;
+        background-color: #E0EEE8;
+        margin-bottom: 4em;
+    }
+
+    .map h3 {
+        padding-left: 15px;
+    }
+
+    .map p {
+        color: #75878A;
+        padding: 15px;
+    }
+
+    footer {
+        padding-top: 10px;
+        color: #758A99;
+        text-align: center;
+    }
+
+    footer p {
+        margin-bottom: 0;
+        padding: 10px;
+    }
+    </style>
 </head>
+
 <body>
-<div class="jumbotron" id="cover">
-  <h1>In Search of Authenticity</h1>
-  <p>A Case Study of San Francisco Chinatown</p>
-</div>
-
-<div class="container">
-    <div class="row" id="content">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <a href="https://moiyunjie.wixsite.com/yunjieli-portfolio/mappingauthenticity" class="thumbnail link">OVERVIEW</a>
-        </div>        
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <a href="./gallery_examples.html" class="thumbnail link">GROUPS</a>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <a href="./gallery_chinatown.html" class="thumbnail link ">#CHINATOWN</a>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <a href="./gallery_cards.html" class="thumbnail link">CLUSTERS</a>
-        </div>
+    <div class="jumbotron" id="cover">
+        <h1>In Search of Authenticity</h1>
+        <p>A Case Study of San Francisco Chinatown</p>
     </div>
-
-    <div class="row" id="atlas">
-        <div class="col-sm-6 col-md-6 col-lg-4">
-            <div class="map thumbnail">
-                <a href="https://public.tableau.com/views/Thesis_ChineseBusinesses/Story?:embed=y&:display_count=yes&:showTabs=y" target="_blank">
+    <div class="container">
+        <div class="row" id="content">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <a href="https://moiyunjie.wixsite.com/yunjieli-portfolio/mappingauthenticity" class="thumbnail link">OVERVIEW</a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <a href="./gallery_examples.html" class="thumbnail link">GROUPS</a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <a href="./gallery_chinatown.html" class="thumbnail link ">#CHINATOWN</a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <a href="./gallery_cards.html" class="thumbnail link">CLUSTERS</a>
+            </div>
+        </div>
+        <div class="row" id="atlas">
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="map thumbnail">
+                    <a href="https://public.tableau.com/views/Thesis_ChineseBusinesses/Story?:embed=y&:display_count=yes&:showTabs=y" target="_blank">
                     <img src="https://cloud.githubusercontent.com/assets/12749701/15100494/64691264-1541-11e6-8dd4-042bd2be938c.png" alt="map_businesses">
                     <div class="caption">
                         <h3>Businesses</h3>
                         <p>A map of Chinese businesses in San Francisco, comparing Chinatown and new Chinese communities in the suburbs. </p>
                     </div>
                 </a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4">
-            <div class="map thumbnail">
-                <a href="https://yligsd.cartodb.com/viz/106d5270-0d52-11e6-8494-0ecd1babdde5/public_map" target="_blank">
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="map thumbnail">
+                    <a href="https://yligsd.cartodb.com/viz/106d5270-0d52-11e6-8494-0ecd1babdde5/public_map" target="_blank">
                     <img src="https://cloud.githubusercontent.com/assets/12749701/15100463/80396742-1540-11e6-95fc-f27c01e96568.png" alt="map_places">
                     <div class="caption">
                         <h3>Chinatown and Places</h3>
                         <p>The 'notable places' as listed top-down, versus Instagrams tagging #SFChinatown or similar tags.</p>
                     </div>
                 </a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4">
-            <div class="map thumbnail">
-                <a href="https://yligsd.cartodb.com/viz/8f667d92-0b2f-11e6-bd01-0ecfd53eb7d3/public_map" target="_blank">
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="map thumbnail">
+                    <a href="https://yligsd.cartodb.com/viz/8f667d92-0b2f-11e6-bd01-0ecfd53eb7d3/public_map" target="_blank">
                     <img src="https://cloud.githubusercontent.com/assets/12749701/15100465/803caea2-1540-11e6-977f-a37020e08733.png" alt="Groups">
                     <div class="caption">
                         <h3>Groups</h3>
                         <p>All local Instagram users are bucketed into three groups according to their posting pattern: locals, tourists and people from San Franciso. </p>
                     </div>
                 </a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4">
-            <div class="map thumbnail">
-                <a href="https://yligsd.cartodb.com/viz/975c9a42-0b73-11e6-b2ef-0ea31932ec1d/public_map" target="_blank">
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="map thumbnail">
+                    <a href="https://yligsd.cartodb.com/viz/975c9a42-0b73-11e6-b2ef-0ea31932ec1d/public_map" target="_blank">
                     <img src="https://cloud.githubusercontent.com/assets/12749701/15100468/803eb2c4-1540-11e6-9f0b-9d5db272121f.png" alt="Clusters">
                     <div class="caption">
                         <h3>Cluters</h3>
                         <p>A total of 15 clusters are identified as 'hot spots' of the Chinatown by locals, people from the city and tourists respectively.</p>
                     </div>
                 </a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4">
-            <div class="map thumbnail">
-                <a href="https://yligsd.cartodb.com/viz/2834b972-1354-11e6-a19d-0e31c9be1b51/public_map" target="_blank">
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="map thumbnail">
+                    <a href="https://yligsd.cartodb.com/viz/2834b972-1354-11e6-a19d-0e31c9be1b51/public_map" target="_blank">
                     <img src="https://cloud.githubusercontent.com/assets/12749701/15100466/803cfe8e-1540-11e6-9d27-42593b6bc48c.png" alt="survey">
                     <div class="caption">
                         <h3>Survey results</h3>
                         <p>In addition, I conducted a paper survey in the local community. This map shows what residents circled out as Chinatown on the paper.</p>
                     </div>
-                </a>   
+                </a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4">
-            <div class="map thumbnail">
-                <a href="https://yligsd.cartodb.com/viz/d8e814f4-eba3-11e5-bb4a-0ecfd53eb7d3/public_map" target="_blank">
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="map thumbnail">
+                    <a href="https://yligsd.cartodb.com/viz/d8e814f4-eba3-11e5-bb4a-0ecfd53eb7d3/public_map" target="_blank">
                     <img src="https://cloud.githubusercontent.com/assets/12749701/15100467/803d1478-1540-11e6-9675-d1176ccea209.png" alt="Data collection">
                     <div class="caption">
                         <h3>Data collection</h3>
                         <p>This last map illustrates how the geo-tagged posts was extracted from the Instagram API.</p>
                     </div>
                 </a>
+                </div>
             </div>
         </div>
     </div>
-
-</div>
-<footer>
-    <p>-- Yunjie Li, 2016 --</p>
-</footer>
-
+    <footer>
+        <p>-- Yunjie Li, 2016 --</p>
+    </footer>
 </body>
+
 </html>
